@@ -16,10 +16,10 @@ using namespace std;
 
 
 // Add prototypes of helper functions here
-
+int countChars(string& chars, char& c);
 bool isWord(const string& word, const set<string>& dict);
 void makeCombo(string word,  int n, int pos, string& letters, const set<string>& dict, set<string>& results);
-void getPermutations(string& word, int n, int x, vector<char>& floatingChars, string& current, int currentIndex, int floatIndex, const set<string>& dict, set<string>& results);
+void getPermutations(string& word, int n, int x, string& floatingChars, string& current, int currentIndex, int floatIndex, const set<string>& dict, set<string>& results);
 
 // Definition of primary wordle function
 
@@ -32,28 +32,35 @@ set<string> wordle( const std::string& in, const std::string& floating, const st
     string fixedWord = in;
     int pos = 0;
     int x = (int) floating.length();
+    string floaters = floating;
     vector<char> floatingChars;
-    for(char c:floating){
-      floatingChars.push_back(c);
-    }
     string current(n, '-');
-    getPermutations(fixedWord, n, x, floatingChars, current, 0,0, dict, results);
-
+    getPermutations(fixedWord, n, x, floaters, current, 0,0, dict, results);
     return results;
    
 }
 
 // Define any helper functions here
 
+int countChars(string& chars, char& c){
+  int result = 0;
+  for(int i = 0; i < chars.length(); i++){
+    if(chars[i] == c){
+      result++;
+    }
+  }
+  return result;
+}
 
-void getPermutations(string& word,  int n,  int x,  vector<char>& floatingChars, string& current, int currentIndex, int floatIndex, const set<string>& dict, set<string>& results){
+
+void getPermutations(string& word,  int n,  int x,  string& floatingChars, string& current, int currentIndex, int floatIndex, const set<string>& dict, set<string>& results){
   if (currentIndex == n) {
         // Check if all floating letters are present in the current permutation
         bool flag = true;
         int count;
         for (char floatingChar : floatingChars) {
-            int countfloat = std::count(floatingChars.begin(), floatingChars.end(), floatingChar) + std::count(word.begin(), word.end(), floatingChar) ;
-            int countWord = std::count(current.begin(), current.end(), floatingChar);
+            int countfloat = countChars(floatingChars, floatingChar) + countChars(word, floatingChar);
+            int countWord = countChars(current, floatingChar);
             if (countfloat != countWord) {
                 flag = false;
                 break;
