@@ -18,13 +18,12 @@ int main()
 {
     // Replace the matrix below with your test case
     AvailabilityMatrix avail = { 
-        {1, 1, 1, 1},
-        {1, 0, 1, 0},
-        {1, 1, 0, 1},
-        {1, 0, 0, 1}
+        {1},
+		{1},
+        {1}
     };
     DailySchedule sched;
-    bool solutionFound = schedule(avail, 2, 2, sched);
+    bool solutionFound = schedule(avail, 1,2, sched);
     if(solutionFound)
     {
         printSchedule(sched);

@@ -18,15 +18,17 @@ int main(int argc, char* argv[])
         return 1;
     }
     const std::set<std::string>& dict = readDictWords("dict-eng.txt");    
-    string in(argv[1]);
+     std::string in(argv[1]);
     string floatingChars;
     if(argc > 2){
         floatingChars = argv[2];
     }
     std::set<string> answers;
-    answers = wordle(in, floatingChars, dict);
-    for(auto s : answers){
-        cout << s << endl;
+
+     std::string fc = floatingChars;
+    answers = wordle(in, fc, dict);
+   for(auto s : answers){
+       cout << s << endl;
     }
     return 0;
 }
